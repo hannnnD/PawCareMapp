@@ -9,9 +9,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Chọn lịch nhắc"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:background="#000000" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,20 +27,22 @@
 
         <TextView
             android:id="@+id/dateTextView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:drawable/editbox_background"
             android:hint="Chọn ngày"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/datePickerButton"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
-            android:text="Chọn ngày"
             android:layout_marginStart="8dp"
-            android:backgroundTint="#FFC0CB"/>
+            android:backgroundTint="#FFC0CB"
+            android:text="Chọn ngày"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
@@ -46,44 +54,47 @@
 
         <TextView
             android:id="@+id/timeTextView"
-            android:layout_width="0dp"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:drawable/editbox_background"
             android:hint="Chọn giờ"
-            android:padding="12dp" />
+            android:padding="12dp"
+            android:textSize="18sp" />
 
         <Button
             android:id="@+id/timePickerButton"
-            android:layout_width="wrap_content"
+            android:layout_width="125dp"
             android:layout_height="wrap_content"
-            android:text="Chọn giờ"
             android:layout_marginStart="8dp"
-            android:backgroundTint="#FFC0CB"/>
+            android:backgroundTint="#FFC0CB"
+            android:text="Chọn giờ"
+            android:textSize="16sp" />
 
     </LinearLayout>
 
     <Spinner
         android:id="@+id/petSpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="16dp"
         android:background="@android:drawable/editbox_background"
-        android:padding="12dp"/>
+        android:padding="12dp" />
 
     <Spinner
         android:id="@+id/reminderTypeSpinner"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="48dp"
         android:layout_marginBottom="24dp"
         android:background="@android:drawable/editbox_background"
-        android:padding="12dp"/>
+        android:padding="12dp" />
 
     <Button
         android:id="@+id/saveButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:backgroundTint="#FFC0CB"
         android:text="Lưu lịch"
-        android:backgroundTint="#FFC0CB"/>
+        android:textSize="16sp" />
 
 </LinearLayout>

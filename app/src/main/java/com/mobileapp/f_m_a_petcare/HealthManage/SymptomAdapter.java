@@ -13,14 +13,11 @@ import com.mobileapp.f_m_a_petcare.R;
 
 import java.util.List;
 
+
 public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomViewHolder> {
 
     private List<Symptom> symptoms;
     private OnSymptomClickListener listener;
-
-    public interface OnSymptomClickListener {
-        void onSymptomClick(Symptom symptom);
-    }
 
     public SymptomAdapter(List<Symptom> symptoms, OnSymptomClickListener listener) {
         this.symptoms = symptoms;
@@ -43,6 +40,16 @@ public class SymptomAdapter extends RecyclerView.Adapter<SymptomAdapter.SymptomV
     @Override
     public int getItemCount() {
         return symptoms.size();
+    }
+
+    // Cập nhật danh sách triệu chứng
+    public void updateSymptomsList(List<Symptom> newSymptoms) {
+        this.symptoms = newSymptoms;
+        notifyDataSetChanged();
+    }
+
+    public interface OnSymptomClickListener {
+        void onSymptomClick(Symptom symptom);
     }
 
     class SymptomViewHolder extends RecyclerView.ViewHolder {

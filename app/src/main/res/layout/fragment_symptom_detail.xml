@@ -1,43 +1,68 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="match_parent"
     android:orientation="vertical"
     android:padding="16dp">
 
-    <ImageView
-        android:id="@+id/detailImage"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:scaleType="centerCrop"
-        android:layout_marginBottom="16dp"/>
+        android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/detailTitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:layout_marginBottom="16dp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
-    <TextView
-        android:id="@+id/detailCause"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"/>
+            <ImageView
+                android:id="@+id/detailImage"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/ic_health_pet1" />
 
-    <TextView
-        android:id="@+id/detailDiagnosis"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:layout_marginBottom="16dp"/>
+            <TextView
+                android:id="@+id/detailTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Symptom Title"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="8dp" />
 
-    <TextView
-        android:id="@+id/detailSolution"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="16sp"/>
+            <TextView
+                android:id="@+id/detailCause"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cause: Information about the cause"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/detailDiagnosis"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Diagnosis: Information about the diagnosis"
+                android:textSize="16sp"
+                android:layout_marginBottom="8dp" />
+
+            <TextView
+                android:id="@+id/detailSolution"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Solution: Information about the solution"
+                android:textSize="16sp"
+                android:layout_marginBottom="16dp" />
+            <Button
+                android:id="@+id/openLinkButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="vcahospitals.com"
+                android:visibility="gone" />  <!-- Đặt mặc định là ẩn -->
+
+
+        </LinearLayout>
+    </ScrollView>
 
 </LinearLayout>

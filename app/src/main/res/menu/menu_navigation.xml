@@ -1,8 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menu_pet" android:title="Thú cưng" android:icon="@drawable/ic_mypet"/>
-    <item android:id="@+id/menu_noti" android:title="Nhắc nhở" android:icon="@drawable/ic_noti"/>
-    <item android:id="@+id/menu_home" android:title="Home" android:icon="@drawable/ic_home"/>
-    <item android:id="@+id/menu_health" android:title="Sức khỏe" android:icon="@drawable/ic_health"/>
-    <item android:id="@+id/menu_settings" android:title="Settings" android:icon="@drawable/ic_settings"/>
+    <item
+        android:id="@+id/menu_pet"
+        android:title="@string/menu_pet"
+        android:icon="@drawable/ic_mypet"
+        android:contentDescription="@string/desc_pet"
+        />
+    <item
+        android:id="@+id/menu_noti"
+        android:title="@string/menu_noti"
+        android:icon="@drawable/ic_noti"
+        android:contentDescription="@string/desc_noti"/>
+    <item
+        android:id="@+id/menu_home"
+        android:title="@string/menu_home"
+        android:icon="@drawable/ic_home"
+        android:contentDescription="@string/desc_home"/>
+    <item
+        android:id="@+id/menu_health"
+        android:title="@string/menu_health"
+        android:icon="@drawable/ic_health"
+        android:contentDescription="@string/desc_health"/>
+    <item
+        android:id="@+id/menu_settings"
+        android:title="@string/menu_settings"
+        android:icon="@drawable/ic_settings"
+        android:contentDescription="@string/desc_settings"/>
 </menu>
