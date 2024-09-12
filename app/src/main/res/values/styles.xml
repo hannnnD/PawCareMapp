@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="CustomMaterialCalendar" parent="ThemeOverlay.MaterialComponents.MaterialCalendar">
+        <item name="materialCalendarStyle">@style/Custom_MaterialCalendar.MaterialCalendar</item>
+        <item name="materialCalendarFullscreenTheme">@style/Custom_MaterialCalendar.MaterialCalendar.Fullscreen</item>
+    </style>
+
+    <style name="Custom_MaterialCalendar.MaterialCalendar" parent="Widget.MaterialComponents.MaterialCalendar">
+        <item name="android:windowFullscreen">false</item>
+        <item name="shapeAppearanceOverlay">@style/Custom_ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar</item>
+    </style>
+
+    <style name="Custom_MaterialCalendar.MaterialCalendar.Fullscreen" parent="Widget.MaterialComponents.MaterialCalendar.Fullscreen">
+        <item name="android:windowFullscreen">false</item>
+        <item name="shapeAppearanceOverlay">@style/Custom_ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar.Fullscreen</item>
+    </style>
+
+    <style name="Custom_ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar" parent="">
+        <item name="cornerSize">16dp</item>
+    </style>
+
+    <style name="Custom_ShapeAppearanceOverlay.MaterialComponents.MaterialCalendar.Fullscreen" parent="">
+        <item name="cornerSize">0dp</item>
+    </style>
+</resources>

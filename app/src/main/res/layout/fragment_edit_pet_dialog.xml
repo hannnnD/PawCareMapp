@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="16dp"
+    android:layout_marginRight="16dp"
+    android:minWidth="300dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Chỉnh sửa thú cưng"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginBottom="16dp" />
+
+        <EditText
+            android:id="@+id/editTextPetName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên thú"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text"/>
+
+        <EditText
+            android:id="@+id/editTextPetBreed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Tên giống"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text"/>
+
+        <RadioGroup
+            android:id="@+id/radioGroupGender"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <RadioButton
+                android:id="@+id/radioButtonMale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Đực" />
+            <RadioButton
+                android:id="@+id/radioButtonFemale"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cái" />
+        </RadioGroup>
+
+        <Button
+            android:id="@+id/buttonSelectBirthday"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Select Birthday" />
+
+        <EditText
+            android:id="@+id/editTextPetBirthday"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Birthday"
+            android:focusable="false"
+            android:clickable="false"
+            android:background="@drawable/edit_text"/>
+
+        <EditText
+            android:id="@+id/editTextPetColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Màu sắc"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text"/>
+
+        <EditText
+            android:id="@+id/editTextPetWeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cân nặng"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text"/>
+
+        <EditText
+            android:id="@+id/editTextPetHeight"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Chiều cao"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/edit_text"/>
+
+        <Button
+            android:id="@+id/buttonChooseImage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Thay đổi ảnh"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/buttonSaveChanges"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Lưu thay đổi"
+            android:backgroundTint="#FFC0CB"
+            android:layout_marginTop="16dp" />
+
+    </LinearLayout>
+</ScrollView>
