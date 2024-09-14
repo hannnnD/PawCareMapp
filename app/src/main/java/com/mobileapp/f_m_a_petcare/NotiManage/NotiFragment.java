@@ -16,7 +16,8 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
-
+import android.provider.Settings;
+import android.net.Uri;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
@@ -31,8 +32,8 @@ import java.util.List;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
-import android.os.Build;
 import androidx.core.content.ContextCompat;
+
 
 public class NotiFragment extends Fragment implements DataUpdateListener {
     private TextView dateTextView, timeTextView;
@@ -133,8 +134,8 @@ public class NotiFragment extends Fragment implements DataUpdateListener {
     }
 
     private void setAlarm(long reminderId, String petId, String date, String time, String reminderType) {
-        AlarmManager alarmManager = (AlarmManager) getContext().getSystemService(Context.ALARM_SERVICE);
-        Intent intent = new Intent(getContext(), ReminderReceiver.class);
+        AlarmManager alarmManager = (AlarmManager) requireContext().getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(requireContext(), ReminderReceiver.class);
         intent.putExtra("reminderId", reminderId);
         intent.putExtra("petId", petId);
         intent.putExtra("reminderType", reminderType);
@@ -143,15 +144,15 @@ public class NotiFragment extends Fragment implements DataUpdateListener {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             flags |= PendingIntent.FLAG_IMMUTABLE;
         }
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), (int) reminderId, intent, flags);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(requireContext(), (int) reminderId, intent, flags);
 
-        // Chuyển đổi ngày giờ thành milliseconds
+        // Convert date and time to milliseconds
         Calendar calendar = Calendar.getInstance();
         String[] dateParts = date.split("/");
         String[] timeParts = time.split(":");
-        calendar.set(Calendar.YEAR, Integer.parseInt(dateParts[2]));
-        calendar.set(Calendar.MONTH, Integer.parseInt(dateParts[1]) - 1);
         calendar.set(Calendar.DAY_OF_MONTH, Integer.parseInt(dateParts[0]));
+        calendar.set(Calendar.MONTH, Integer.parseInt(dateParts[1]) - 1);
+        calendar.set(Calendar.YEAR, Integer.parseInt(dateParts[2]));
         calendar.set(Calendar.HOUR_OF_DAY, Integer.parseInt(timeParts[0]));
         calendar.set(Calendar.MINUTE, Integer.parseInt(timeParts[1]));
         calendar.set(Calendar.SECOND, 0);
@@ -159,18 +160,30 @@ public class NotiFragment extends Fragment implements DataUpdateListener {
         long alarmTime = calendar.getTimeInMillis();
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SCHEDULE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED) {
+            if (alarmManager.canScheduleExactAlarms()) {
                 alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
             } else {
                 // Permission not granted, use inexact alarm instead
                 alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
+                // Prompt the user to grant permission
+                requestExactAlarmPermission();
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
-        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
         } else {
-            alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
+        }
+    }
+
+    private void requestExactAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            Intent intent = new Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM);
+            intent.setData(Uri.parse("package:" + requireContext().getPackageName()));
+            try {
+                startActivity(intent);
+            } catch (Exception e) {
+                Toast.makeText(requireContext(), "Unable to open alarm settings", Toast.LENGTH_LONG).show();
+            }
         }
     }
 
