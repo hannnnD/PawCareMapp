@@ -120,6 +120,30 @@
                     tools:ignore="TouchTargetSizeCheck" />
             </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Quyền hẹn giờ chính xác"
+                    android:textSize="20sp" />
+
+                <Switch
+                    android:id="@+id/switchAlarm"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginBottom="5dp"
+                    android:scaleX="1.1"
+                    android:scaleY="1.1"
+                    tools:ignore="TouchTargetSizeCheck" />
+            </LinearLayout>
+
 
         </LinearLayout>
     </LinearLayout>

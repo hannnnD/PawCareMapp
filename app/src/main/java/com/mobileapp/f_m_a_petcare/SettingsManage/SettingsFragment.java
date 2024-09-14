@@ -20,7 +20,7 @@ import com.mobileapp.f_m_a_petcare.R;
 
 public class SettingsFragment extends Fragment {
 
-    private Switch switchStorage, switchNotification, switchCalendar;
+    private Switch switchStorage, switchNotification, switchCalendar, switchAlarm;
     private static final int PERMISSION_REQUEST_CODE = 123;
     private SharedPreferences sharedPreferences;
 
@@ -38,6 +38,7 @@ public class SettingsFragment extends Fragment {
         switchStorage = view.findViewById(R.id.switchStorage);
         switchNotification = view.findViewById(R.id.switchNotification);
         switchCalendar = view.findViewById(R.id.switchCalendar);
+        switchAlarm = view.findViewById(R.id.switchAlarm);
 
         setupSwitches();
         updateSwitchStates();
@@ -55,6 +56,8 @@ public class SettingsFragment extends Fragment {
         setupSwitch(switchStorage, Manifest.permission.READ_EXTERNAL_STORAGE, "storage_permission");
         setupSwitch(switchNotification, Manifest.permission.POST_NOTIFICATIONS, "notification_permission");
         setupSwitch(switchCalendar, Manifest.permission.READ_CALENDAR, "calendar_permission");
+        setupSwitch(switchAlarm, Manifest.permission.SCHEDULE_EXACT_ALARM, "alarm_permission");
+
     }
 
     private void setupSwitch(Switch switchView, String permission, String preferenceKey) {
@@ -120,11 +123,15 @@ public class SettingsFragment extends Fragment {
         if (requestCode == PERMISSION_REQUEST_CODE) {
             for (int i = 0; i < permissions.length; i++) {
                 boolean isGranted = grantResults[i] == PackageManager.PERMISSION_GRANTED;
+                if (!isGranted && permissions[i].equals(Manifest.permission.SCHEDULE_EXACT_ALARM)) {
+                    Toast.makeText(getContext(), "Quyền hẹn giờ chính xác bị từ chối", Toast.LENGTH_SHORT).show();
+                }
                 updatePermissionState(getPreferenceKeyForPermission(permissions[i]), isGranted);
                 updateSwitchState(getSwitchForPermission(permissions[i]), permissions[i], getPreferenceKeyForPermission(permissions[i]));
             }
         }
     }
+
 
     private String getPreferenceKeyForPermission(String permission) {
         switch (permission) {
@@ -134,6 +141,8 @@ public class SettingsFragment extends Fragment {
                 return "notification_permission";
             case Manifest.permission.READ_CALENDAR:
                 return "calendar_permission";
+            case Manifest.permission.SCHEDULE_EXACT_ALARM:
+                return "alarm_permission";
             default:
                 return "";
         }
@@ -147,6 +156,8 @@ public class SettingsFragment extends Fragment {
                 return switchNotification;
             case Manifest.permission.READ_CALENDAR:
                 return switchCalendar;
+            case Manifest.permission.SCHEDULE_EXACT_ALARM:
+                return switchAlarm;
             default:
                 return null;
         }
