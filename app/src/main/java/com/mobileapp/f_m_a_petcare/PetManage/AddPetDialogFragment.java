@@ -138,4 +138,13 @@ public class AddPetDialogFragment extends DialogFragment {
         ((PetFragment) getParentFragment()).addPet(newPet);
         dismiss();
     }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (getDialog() != null) {
+            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+    }
+
 }

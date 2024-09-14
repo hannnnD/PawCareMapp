@@ -179,4 +179,11 @@ public class EditPetDialogFragment extends DialogFragment {
         dismiss();
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+        if (getDialog() != null) {
+            getDialog().getWindow().setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        }
+    }
 }

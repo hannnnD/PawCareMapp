@@ -164,15 +164,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         if (cursor.moveToFirst()) {
             do {
                 Pet pet = new Pet(
-                        cursor.getString(cursor.getColumnIndex(COLUMN_ID)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_TEN_THU)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_TEN_GIONG)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_GIOI_TINH)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_NGAY_SINH)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_MAU_SAC)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_CAN_NANG)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_CHIEU_CAO)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_PATH))
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEN_THU)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEN_GIONG)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GIOI_TINH)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NGAY_SINH)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MAU_SAC)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CAN_NANG)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CHIEU_CAO)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_PATH))
                 );
                 pet.setImagePaths(getPetImages(pet.getId()));
                 petList.add(pet);
@@ -190,15 +190,15 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Pet pet = null;
         if (cursor != null && cursor.moveToFirst()) {
             pet = new Pet(
-                    cursor.getString(cursor.getColumnIndex(COLUMN_ID)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_TEN_THU)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_TEN_GIONG)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_GIOI_TINH)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_NGAY_SINH)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_MAU_SAC)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_CAN_NANG)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_CHIEU_CAO)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_PATH))
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEN_THU)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_TEN_GIONG)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GIOI_TINH)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_NGAY_SINH)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_MAU_SAC)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CAN_NANG)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_CHIEU_CAO)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_PATH))
             );
             pet.setImagePaths(getPetImages(petId));
             cursor.close();
@@ -216,7 +216,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         if (cursor.moveToFirst()) {
             do {
-                imagePaths.add(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_PATH_COLLECTION)));
+                imagePaths.add(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_IMAGE_PATH_COLLECTION)));
             } while (cursor.moveToNext());
         }
         cursor.close();
@@ -256,26 +256,31 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     public List<Reminder> getAllReminders() {
         List<Reminder> reminders = new ArrayList<>();
-        String selectQuery = "SELECT * FROM " + TABLE_REMINDERS;
+        String selectQuery = "SELECT * FROM " + TABLE_REMINDERS + " ORDER BY "
+                + COLUMN_REMINDER_DATE + " ASC, "
+                + COLUMN_REMINDER_TIME + " ASC";
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(selectQuery, null);
 
         if (cursor.moveToFirst()) {
             do {
                 Reminder reminder = new Reminder(
-                        cursor.getLong(cursor.getColumnIndex(COLUMN_REMINDER_ID)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_PET_ID)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_REMINDER_DATE)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_REMINDER_TIME)),
-                        cursor.getString(cursor.getColumnIndex(COLUMN_REMINDER_TYPE))
+                        cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_REMINDER_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PET_ID)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REMINDER_DATE)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REMINDER_TIME)),
+                        cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REMINDER_TYPE))
                 );
                 reminders.add(reminder);
             } while (cursor.moveToNext());
         }
+
         cursor.close();
         db.close();
         return reminders;
     }
+
+
 
     // Thêm phương thức để xóa lịch nhắc nhở
     public void deleteReminder(long reminderId) {
@@ -291,11 +296,11 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         Reminder reminder = null;
         if (cursor != null && cursor.moveToFirst()) {
             reminder = new Reminder(
-                    cursor.getLong(cursor.getColumnIndex(COLUMN_REMINDER_ID)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_PET_ID)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_REMINDER_DATE)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_REMINDER_TIME)),
-                    cursor.getString(cursor.getColumnIndex(COLUMN_REMINDER_TYPE))
+                    cursor.getLong(cursor.getColumnIndexOrThrow(COLUMN_REMINDER_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_PET_ID)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REMINDER_DATE)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REMINDER_TIME)),
+                    cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_REMINDER_TYPE))
             );
             cursor.close();
         }

@@ -21,9 +21,11 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:numColumns="3"
-        android:columnWidth="24dp"
-        android:verticalSpacing="1dp"
-        android:horizontalSpacing="1dp"
-        android:stretchMode="spacingWidth"/>
+        android:columnWidth="90dp"
+        android:verticalSpacing="8dp"
+        android:horizontalSpacing="8dp"
+        android:stretchMode="columnWidth"
+        android:gravity="center"/>
+
 
 </LinearLayout>

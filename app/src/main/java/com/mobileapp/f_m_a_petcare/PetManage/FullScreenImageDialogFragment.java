@@ -45,4 +45,7 @@ public class FullScreenImageDialogFragment extends DialogFragment {
 
         return view;
     }
+
+
+
 }
