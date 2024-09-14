@@ -14,11 +14,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.mobileapp.f_m_a_petcare.DB.DatabaseHelper;
 import com.mobileapp.f_m_a_petcare.DataUpdateListener;
 import com.mobileapp.f_m_a_petcare.MainActivity;
+import com.mobileapp.f_m_a_petcare.NotiManage.EditNotiDialogFragment;
 import com.mobileapp.f_m_a_petcare.NotiManage.Reminder;
 import com.mobileapp.f_m_a_petcare.PetManage.Pet;
 import com.mobileapp.f_m_a_petcare.R;
@@ -204,7 +206,18 @@ public class HomeFragment extends Fragment implements DataUpdateListener {
                 editButton.setOnClickListener(v -> {
                     int position = getAdapterPosition();
                     if (position != RecyclerView.NO_POSITION) {
-                        // TODO: Implement edit reminder functionality
+                        Reminder reminder = reminders.get(position);
+
+                        // Tạo bundle và truyền reminderId vào
+                        Bundle bundle = new Bundle();
+                        bundle.putLong("reminderId", reminder.getId());
+
+                        // Chuyển tới EditNotiDialogFragment
+                        EditNotiDialogFragment editDialogFragment = new EditNotiDialogFragment();
+                        editDialogFragment.setArguments(bundle);
+
+                        // Hiển thị DialogFragment
+                        editDialogFragment.show(((FragmentActivity) v.getContext()).getSupportFragmentManager(), "EditReminderDialog");
                     }
                 });
 
