@@ -2,4 +2,18 @@
     <string name="app_name">F_M_A_PetCare</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="menu_pet">Thú cưng</string>
+    <string name="menu_noti">Nhắc nhở</string>
+    <string name="menu_home">Home</string>
+    <string name="menu_health">Sức khỏe</string>
+    <string name="menu_settings">Settings</string>
+    <string name="desc_pet">Thú cưng</string>
+    <string name="desc_noti">Nhắc nhở</string>
+    <string name="desc_home">Home</string>
+    <string name="desc_health">Sức khỏe</string>
+    <string name="desc_settings">Settings</string>
+    <string name="pet_name">Tên thú</string>
+    <string name="pet_breed">Tên giống</string>
+
 </resources>
+

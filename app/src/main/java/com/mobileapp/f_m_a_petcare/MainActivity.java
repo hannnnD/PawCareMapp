@@ -10,6 +10,7 @@ import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.widget.Toast;
 import android.Manifest;
+import android.view.View;
 import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -32,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements DataUpdateListene
     private BottomNavigationView mBottomNavigationView;
     private static final int PERMISSION_REQUEST_CODE = 1001;
     private static final int PICK_IMAGE_REQUEST = 1;
+    private static final int SCHEDULE_EXACT_ALARM_REQUEST_CODE = 1002;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements DataUpdateListene
         mViewPager.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
             @Override
             public void onPageSelected(int position) {
-
                 switch (position) {
                     case 0:
                         mBottomNavigationView.setSelectedItemId(R.id.menu_pet);
@@ -93,25 +94,24 @@ public class MainActivity extends AppCompatActivity implements DataUpdateListene
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
+
+        checkAndRequestAlarmPermission();
     }
 
     private void requestPermissions() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            // For Android 13 and above, we use READ_MEDIA_IMAGES
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_MEDIA_IMAGES}, PERMISSION_REQUEST_CODE);
             } else {
                 pickImage();
             }
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            // For Android 6.0 to Android 12, we use READ_EXTERNAL_STORAGE
             if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, PERMISSION_REQUEST_CODE);
             } else {
                 pickImage();
             }
         } else {
-            // For Android 5.1 and below, no runtime permission is needed
             pickImage();
         }
     }
@@ -124,7 +124,13 @@ public class MainActivity extends AppCompatActivity implements DataUpdateListene
                 pickImage();
             } else {
                 Toast.makeText(this, "Permission denied. You can still select images through the system picker.", Toast.LENGTH_LONG).show();
-                pickImage(); // Even if permission is denied, we can use the system picker
+                pickImage();
+            }
+        }
+        if (requestCode == SCHEDULE_EXACT_ALARM_REQUEST_CODE) {
+            if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            } else {
+                Toast.makeText(this, "Permission to set exact alarms denied. Some features may not work properly.", Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -141,16 +147,12 @@ public class MainActivity extends AppCompatActivity implements DataUpdateListene
         if (requestCode == PICK_IMAGE_REQUEST && resultCode == Activity.RESULT_OK) {
             if (data != null && data.getData() != null) {
                 Uri imageUri = data.getData();
-                // Use this URI to display or process the selected image
-                // For example, you might want to save this URI to your database
                 saveImageUriToDatabase(imageUri.toString());
             }
         }
     }
 
     private void saveImageUriToDatabase(String uriString) {
-        // Implement this method to save the URI to your database
-        // This will depend on how your database is structured
     }
 
     public void addDataUpdateListener(DataUpdateListener listener) {
@@ -165,6 +167,14 @@ public class MainActivity extends AppCompatActivity implements DataUpdateListene
     public void onDataUpdated() {
         for (DataUpdateListener listener : listeners) {
             listener.onDataUpdated();
+        }
+    }
+
+    private void checkAndRequestAlarmPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.SCHEDULE_EXACT_ALARM) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.SCHEDULE_EXACT_ALARM}, SCHEDULE_EXACT_ALARM_REQUEST_CODE);
+            }
         }
     }
 }

@@ -29,6 +29,11 @@ import com.mobileapp.f_m_a_petcare.R;
 import java.util.Calendar;
 import java.util.List;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
+import androidx.core.content.ContextCompat;
+
 public class NotiFragment extends Fragment implements DataUpdateListener {
     private TextView dateTextView, timeTextView;
     private Spinner petSpinner, reminderTypeSpinner;
@@ -134,7 +139,11 @@ public class NotiFragment extends Fragment implements DataUpdateListener {
         intent.putExtra("petId", petId);
         intent.putExtra("reminderType", reminderType);
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), (int) reminderId, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        int flags = PendingIntent.FLAG_UPDATE_CURRENT;
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            flags |= PendingIntent.FLAG_IMMUTABLE;
+        }
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(getContext(), (int) reminderId, intent, flags);
 
         // Chuyển đổi ngày giờ thành milliseconds
         Calendar calendar = Calendar.getInstance();
@@ -149,7 +158,14 @@ public class NotiFragment extends Fragment implements DataUpdateListener {
 
         long alarmTime = calendar.getTimeInMillis();
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            if (ContextCompat.checkSelfPermission(getContext(), Manifest.permission.SCHEDULE_EXACT_ALARM) == PackageManager.PERMISSION_GRANTED) {
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
+            } else {
+                // Permission not granted, use inexact alarm instead
+                alarmManager.set(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
+            }
+        } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);
         } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, alarmTime, pendingIntent);

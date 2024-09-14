@@ -1,9 +1,12 @@
 package com.mobileapp.f_m_a_petcare.HealthManage;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -26,6 +29,7 @@ public class SymptomDetailDialogFragment extends BottomSheetDialogFragment {
         fragment.setArguments(args);
         return fragment;
     }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -50,6 +54,7 @@ public class SymptomDetailDialogFragment extends BottomSheetDialogFragment {
         TextView detailCause = view.findViewById(R.id.detailCause);
         TextView detailDiagnosis = view.findViewById(R.id.detailDiagnosis);
         TextView detailSolution = view.findViewById(R.id.detailSolution);
+        Button openLinkButton = view.findViewById(R.id.openLinkButton);  // Thêm nút mở liên kết
 
         if (symptom != null) {
             detailImage.setImageResource(symptom.getImageResId());
@@ -57,6 +62,16 @@ public class SymptomDetailDialogFragment extends BottomSheetDialogFragment {
             detailCause.setText(symptom.getCause());
             detailDiagnosis.setText(symptom.getDiagnosis());
             detailSolution.setText(symptom.getSolution());
+
+            // Hiển thị nút mở liên kết và gắn sự kiện
+            openLinkButton.setVisibility(View.VISIBLE);
+            openLinkButton.setOnClickListener(v -> {
+                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(symptom.getUrl()));
+                startActivity(browserIntent);
+            });
         }
     }
+
+
+
 }
