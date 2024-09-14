@@ -302,4 +302,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.close();
         return reminder;
     }
+
+    public void updateReminder(long id, String petId, String date, String time, String reminderType) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_PET_ID, petId);
+        values.put(COLUMN_REMINDER_DATE, date);
+        values.put(COLUMN_REMINDER_TIME, time);
+        values.put(COLUMN_REMINDER_TYPE, reminderType);
+
+        db.update(TABLE_REMINDERS, values, COLUMN_REMINDER_ID + " = ?", new String[]{String.valueOf(id)});
+        db.close();
+    }
+
 }

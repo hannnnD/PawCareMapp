@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.datepicker.MaterialDatePicker;
+import com.mobileapp.f_m_a_petcare.MainActivity;
 import com.mobileapp.f_m_a_petcare.R;
 
 import java.text.SimpleDateFormat;
@@ -137,11 +138,13 @@ public class EditPetDialogFragment extends DialogFragment {
         String weight = editTextPetWeight.getText().toString();
         String height = editTextPetHeight.getText().toString();
 
+        // Kiểm tra xem các trường có được điền đầy đủ hay không
         if (name.isEmpty() || breed.isEmpty() || birthday.isEmpty() || color.isEmpty() || weight.isEmpty() || height.isEmpty()) {
             Toast.makeText(getContext(), "Please fill all fields", Toast.LENGTH_SHORT).show();
             return;
         }
 
+        // Kiểm tra định dạng số cho cân nặng và chiều cao
         try {
             float weightValue = Float.parseFloat(weight);
             float heightValue = Float.parseFloat(height);
@@ -150,6 +153,7 @@ public class EditPetDialogFragment extends DialogFragment {
             return;
         }
 
+        // Cập nhật đối tượng Pet
         petToEdit.setTenThu(name);
         petToEdit.setTenGiong(breed);
         petToEdit.setGioiTinh(gender);
@@ -157,11 +161,22 @@ public class EditPetDialogFragment extends DialogFragment {
         petToEdit.setMauSac(color);
         petToEdit.setCanNang(weight);
         petToEdit.setChieuCao(height);
+
+        // Nếu có hình ảnh mới, cập nhật đường dẫn hình ảnh
         if (selectedImagePath != null) {
             petToEdit.setImagePath(selectedImagePath);
         }
 
+        // Cập nhật Pet trong Fragment cha
         ((PetFragment) getParentFragment()).updatePet(petToEdit);
+
+        // Gọi onDataUpdated() trong MainActivity để thông báo các Fragment khác
+        if (getActivity() instanceof MainActivity) {
+            ((MainActivity) getActivity()).onDataUpdated();
+        }
+
+        // Đóng dialog sau khi hoàn thành
         dismiss();
     }
+
 }
